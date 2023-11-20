@@ -1,12 +1,34 @@
 package main
 
+import (
+	"fmt"
+	"sync"
+)
+
 func main() {
+
+	var (
+		valueCh = make(chan int)
+		wg      sync.WaitGroup
+	)
+
+	wg.Add(1)
 	go func() {
+		defer wg.Done()
+
 		for i := 0; i < 6; i++ {
-			// TODO: send iterator over channel
+			valueCh <- i
 		}
+
+		close(valueCh)
 	}()
 
-	// TODO: range over channel to recv values
+	for v := range valueCh {
+		fmt.Println(v)
+	}
+
+	wg.Wait()
+
+	// DONE: range over channel to recv values
 
 }

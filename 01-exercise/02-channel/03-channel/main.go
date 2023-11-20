@@ -5,13 +5,15 @@ import (
 )
 
 func main() {
-	ch := make(chan int)
+	const countOfIterations = 6
+
+	ch := make(chan int, countOfIterations)
 
 	go func() {
 		defer close(ch)
 
-		// TODO: send all iterator values on channel without blocking
-		for i := 0; i < 6; i++ {
+		// DONE: send all iterator values on channel without blocking
+		for i := 0; i < countOfIterations; i++ {
 			fmt.Printf("Sending: %d\n", i)
 			ch <- i
 		}
