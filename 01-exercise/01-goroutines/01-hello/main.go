@@ -20,17 +20,15 @@ func main() {
 
 	go fun("basic goroutine call")
 
-	go func() {
+	go func(s string) {
+		fun(s)
+	}("lambda func goroutine call")
 
-	}
+	fn := fun
 
-	// goroutine function call
+	go fn("func to var goroutine call")
 
-	// goroutine with anonymous function
-
-	// goroutine with function value call
-
-	// wait for goroutines to end
+	time.Sleep(time.Second * 3)
 
 	fmt.Println("done..")
 }
