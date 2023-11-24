@@ -13,8 +13,18 @@ func main() {
 		ch <- "one"
 	}()
 
-	// TODO: implement timeout for recv on channel ch
+	// DONE: implement timeout for recv on channel ch
 
-	m := <-ch
-	fmt.Println(m)
+loop:
+	for {
+		select {
+		case msg := <-ch:
+			fmt.Println(msg)
+			break loop
+		default:
+			fmt.Println("timout start")
+			time.Sleep(time.Second)
+			fmt.Println("timout end")
+		}
+	}
 }

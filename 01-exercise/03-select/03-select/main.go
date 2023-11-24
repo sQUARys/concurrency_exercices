@@ -16,13 +16,15 @@ func main() {
 
 	}()
 
-	// TODO: if there is no value on channel, do not block.
-	for i := 0; i < 2; i++ {
-		m := <-ch
-		fmt.Println(m)
+	// DONE: if there is no value on channel, do not block.
+	for {
 
-		// Do some processing..
-		fmt.Println("processing..")
-		time.Sleep(1500 * time.Millisecond)
+		select {
+		case m := <-ch:
+			fmt.Println(m)
+			return
+		default:
+			fmt.Println("no messages")
+		}
 	}
 }
